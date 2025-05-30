@@ -174,5 +174,14 @@ cython_debug/
 .pypirc
 
 # orthanc db
-/orthanc/db/
-/orthanc/auditdb/
+/orthanc/data/db/
+/orthanc/data/auditdb/
+
+# Ignore all files in these directories
+/orthanc/data/db/*
+/orthanc/data/auditdb/*
+# But do not ignore the .gitkeep files
+!/orthanc/data/db/.gitkeep
+!/orthanc/data/auditdb/.gitkeep
+!/orthanc/data/plugins/.gitkeep
+!/orthanc/data/tmp/.gitkeep
