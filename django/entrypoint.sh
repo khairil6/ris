@@ -66,8 +66,9 @@ fi
 
 # 5) Apply database migrations
 echo "⚙️  Applying migrations…"
-python manage.py makemigrations 
+python manage.py makemigrations accounts
 python manage.py makemigrations ris_app 
+python manage.py makemigrations
 python manage.py migrate
 
 # 6) Only create the superuser if none exists

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'ris_app',
     'django_filters',
+    'accounts',
 ]
 
 MIDDLEWARE = [
@@ -135,6 +136,8 @@ SIMPLE_JWT = {
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = 'accounts.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {
