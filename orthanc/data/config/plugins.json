@@ -1,0 +1,175 @@
+{
+
+  // "Authorization": {
+  //   "WebServiceRootUrl": "",
+  //   "WebServiceUserProfileUrl": "",
+  //   "WebServiceTokenValidationUrl": "",
+  //   "WebServiceTokenCreationBaseUrl": "",
+  //   "WebServiceTokenDecoderUrl": "",
+  //   "WebServiceUsername": "",
+  //   "WebServicePassword": "",
+  //   "WebServiceIdentifier": "",
+  //   "TokenHttpHeaders": [],
+  //   "TokenGetArguments": [],
+  //   "StandardConfigurations": [],
+  //   "UncheckedResources": [],
+  //   "UncheckedFolders": [],
+  //   "CheckedLevel": "studies",
+  //   //"UncheckedLevels": [],
+  //   "Permissions": [
+  //     [
+  //       "post",
+  //       "^/auth/tokens/decode$",
+  //       ""
+  //     ],
+  //     [
+  //       "post",
+  //       "^/tools/lookup$",
+  //       ""
+  //     ],
+  //     [
+  //       "post",
+  //       "^/tools/find$",
+  //       "all|view"
+  //     ],
+  //     [
+  //       "get",
+  //       "^/(patients|studies|series|instances)/([a-f0-9-]+)$",
+  //       "all|view"
+  //     ],
+  //     [
+  //       "put",
+  //       "^/auth/tokens/(stone-viewer-publication||ohif-viewer-publication)$",
+  //       "all|share"
+  //     ]
+  //   ]
+  // },
+
+  "ConnectivityChecks": {},
+
+  "DelayedDeletion": {
+    "Enable": false,
+    "ThrottleDelayMs": 0
+  },
+
+  "DicomWeb": {
+    "Enable": true,
+    "Root": "/dicom-web/",
+    "EnableWado": true,
+    "WadoRoot": "/wado",
+    "Ssl": false,
+    "QidoCaseSensitive": true,
+    "Host": "",
+    "StudiesMetadata": "Full",
+    "SeriesMetadata": "Full",
+    "EnableMetadataCache": true,
+    "MetadataWorkerThreadsCount": 4,
+    "PublicRoot": "/dicom-web/"
+  },
+
+  "Gdcm": {
+    "Enable": true,
+    "Throttling": 4,
+    "RestrictTransferSyntaxes": []
+  },
+
+  "Housekeeper": {
+    "Enable": false,
+    "GlobalPropertyId": 1025,
+    "Force": false,
+    "ThrottleDelay": 5,
+    "Triggers": {
+      "StorageCompressionChange": true,
+      "MainDicomTagsChange": true,
+      "UnnecessaryDicomAsJsonFiles": true,
+      "IngestTranscodingChange": true,
+      "DicomWebCacheChange": true
+    },
+    "LimitMainDicomTagsReconstructLevel": "All"
+  },
+
+  // "Indexer": {
+  //   "Enable": true,
+  //   "Folders": [],
+  //   "Interval": 10
+  // },
+
+  // "MultitenantDicom": {
+  //   "Servers": []  
+  // },
+
+  // "Neuro": {},
+
+  "OHIF": {
+    "DataSource": "dicom-web",
+    "UserConfiguration": "",
+    "RouterBasename": "/ohif/",
+    "Preload": true
+  },
+
+  "OrthancExplorer2": {},
+
+  "OsimisWebViewer": {},
+
+  // "PostgreSQL": {
+  //   "EnableIndex": true,
+  //   "EnableStorage": false,
+  //   "Host": "localhost",
+  //   "Port": 5432,
+  //   "Database": "orthanc",
+  //   "Username": "orthanc",
+  //   "Password": "orthanc",
+  //   "Lock": true,
+  //   "EnableSsl": false,
+  //   "MaximumConnectionRetries": 10,
+  //   "ConnectionRetryInterval": 5,
+  //   "IndexConnectionsCount": 50,
+  //   "TransactionMode": "ReadCommitted",
+  //   "EnableVerboseLogs": false,
+  //   "HousekeepingInterval": 1,
+  //   "AllowInconsistentChildCounts": false
+  // },
+
+  "Python": {
+    "Path": "/etc/orthanc/script/audit.py",
+    "Verbose": false,
+    "DisplayMemoryUsage": false,
+    "AllowThreads": false
+  },
+
+  // "ServeFolders": {
+  //   "AllowCache": false,
+  //   "GenerateETag": true,
+  //   "Extensions": {},
+  //   "Folders": {}
+  // },
+
+  // "STL": {
+  //   "EnableNIfTI": false,
+  //   "EnableNexus": false
+  // },
+
+  "StoneWebViewer": {},
+
+  // "Tcia": {
+  //   "Enable": false
+  // },
+
+  // "Transfers": {
+  //   "HttpTimeout": 120,
+  //   "Transfers": {
+  //     "Threads": 6,
+  //     "BucketSize": 4096,
+  //     "CacheSize": 128,
+  //     "MaxPushTransactions": 4,
+  //     "MaxHttpRetries": 0,
+  //     "PeerConnectivityTimeout": 2,
+  //     "PeerCommitTimeout": 600
+  //   }
+  // },
+
+  "VolView": {},
+  "WebViewer": {},
+  "Worklists": {},
+  "WSI": {}
+}

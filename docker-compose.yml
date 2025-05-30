@@ -1,0 +1,87 @@
+version: '3.8'
+
+services:
+  # --------------------
+  # 1) DICOM Server
+  # --------------------
+  orthanc:
+    image: orthancteam/orthanc:latest-full
+    network_mode: bridge
+    ports:
+      - "4242:4242"   # DICOM DIMSE
+      - "8042:8042"   # HTTP API & Web UI
+    volumes:
+      # your folder of JSON config files
+      - ./orthanc/data/config:/etc/orthanc:ro
+      - ./orthanc/data/plugins:/usr/share/orthanc/plugins:rw
+      - ./orthanc/data/db:/var/lib/orthanc/db:rw
+      - ./orthanc/data/tmp:/var/lib/orthanc/tmp:rw
+      - ./orthanc/data/auditdb:/var/lib/orthanc/auditdb:rw
+
+    environment:
+      VERBOSE_STARTUP:  "true"
+
+      # override Plugins, but include the default dir first:
+      ORTHANC__Plugins: '["/usr/share/orthanc/plugins","/etc/orthanc/plugins"]'
+
+      # Core HTTP + DIMSE
+      ORTHANC__HttpServerPort:       "8042"
+      ORTHANC__DicomPort:            "4242"
+      ORTHANC__EnableCors:           "true"
+
+      # DICOMweb
+      ORTHANC__DICOM_WEB__Enable:    "true"
+      ORTHANC__DICOM_WEB__Root:      "/dicom-web"
+
+      # Audit‐trail plugin (in‐container SQLite, ephemeral)
+      # AUDITDB_PLUGIN_ENABLED:        "true"
+      # ORTHANC__AuditDb__Type:        "SQLite"
+      # ORTHANC__AuditDb__Filename:    "/var/lib/orthanc/audit.sqlite"
+
+      # OHIF viewer plugin
+      OHIF_PLUGIN_ENABLED:           "true"
+
+      # Simple authentication
+      AUTHORIZATION_PLUGIN_ENABLED: "true"
+      ORTHANC__AuthenticationEnabled:  "true"
+      ORTHANC__REGISTERED_USERS: |
+          {"admin": "admin"}
+
+  # --------------------
+  # 2) Backend (Django)
+  # --------------------
+
+  django:
+    build:
+      context: ./django
+      dockerfile: Dockerfile
+    image: ris-django:latest
+    container_name: ris-django
+    volumes:
+      - ./django/data:/app/data        # mount your Django project (manage.py, etc.)
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=ris_project.settings
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@gmail.com
+      - DJANGO_SUPERUSER_PASSWORD=admin123
+    depends_on:
+      - orthanc
+
+  # --------------------
+  # 3) Frontend (Nuxt)
+  # --------------------
+  nuxt:
+    build:
+      context: ./nuxt
+      dockerfile: Dockerfile
+    container_name: ris-nuxt
+    volumes:
+      - ./nuxt/app:/app         # mount your Nuxt code + node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - django
+
+# (Optional) You can define networks, volumes, etc. here if you need them.
